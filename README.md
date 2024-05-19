@@ -1,6 +1,6 @@
 Portofolio Web Petra for Final Purpose
 
-Dosen dan mahasiswa dapat melakukan posting portofolio atau karya nya yang dimana pada satu post, user dapat postingan multiple files dengan tipe file yang telah disediakan oleh developer yaitu:
+Dosen dan mahasiswa dapat melakukan posting portofolio atau karya nya yang dimana pada satu post, user dapat posting multiple files dengan tipe file yang telah disediakan oleh developer yaitu:
 -All sorts of links
 -Image (jpeg, jpg, png)
 -Multiple Images / Album (jpeg, jpg, png)
