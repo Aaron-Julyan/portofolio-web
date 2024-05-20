@@ -90,9 +90,13 @@
             </div>
             <div class="mb-3">
                 <label for="file" class="form-label">Upload Profile Image*</label>
-                <img class="img-preview img-fluid mb-3 col-sm-3">
+                <div class="img-container">
+                    <img class="img-preview rounded-circle mb-3 d-block" width="100" height="100">
+                </div>
                 <input class="form-control" type="file" id="file" name="file" onchange="previewImage()"
                     @error('file') is-invalid @enderror>
+                <div id="imageHelp" class="form-text" style="font-size:12px;">*Picture with 1:1 ratio is recommended
+                </div>
                 @error('file')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -128,9 +132,48 @@
             document.getElementById('search_bar').style.display = 'block';
         });
 
+        // function previewImage() {
+        //     const image = document.querySelector('#file');
+        //     const imgPreview = document.querySelector('.img-preview');
+
+        //     imgPreview.style.display = 'block';
+
+        //     const oFReader = new FileReader();
+        //     oFReader.readAsDataURL(image.files[0]);
+
+        //     oFReader.onload = function(oFREvent) {
+        //         imgPreview.src = oFREvent.target.result;
+        //     }
+
+        //     // Memeriksa rasio gambar sebelum diunggah
+        //     fileInput.addEventListener('change', function() {
+        //         const img = new Image();
+        //         img.src = URL.createObjectURL(this.files[0]);
+        //         img.onload = function() {
+        //             const width = img.naturalWidth;
+        //             const height = img.naturalHeight;
+        //             if (width !== height) {
+        //                 alert('Please upload an image with a 1:1 aspect ratio.');
+        //                 fileInput.value = ''; // Mengosongkan input file
+        //                 imgPreview.src = ''; // Menghapus tampilan preview
+        //             }
+        //         };
+        //     });
+        // }
+
         function previewImage() {
             const image = document.querySelector('#file');
-            const imgPreview = document.querySelector('.img-preview');
+            const imgContainer = document.querySelector('.img-container');
+            let imgPreview = document.querySelector('.img-preview');
+
+            if (!imgPreview) {
+                // Create imgPreview if it doesn't exist
+                imgPreview = document.createElement('img');
+                imgPreview.classList.add('img-preview', 'rounded-circle', 'mb-3', 'd-block');
+                imgPreview.width = 100;
+                imgPreview.height = 100;
+                imgContainer.appendChild(imgPreview);
+            }
 
             imgPreview.style.display = 'block';
 
@@ -140,21 +183,6 @@
             oFReader.onload = function(oFREvent) {
                 imgPreview.src = oFREvent.target.result;
             }
-
-            // Memeriksa rasio gambar sebelum diunggah
-            fileInput.addEventListener('change', function() {
-                const img = new Image();
-                img.src = URL.createObjectURL(this.files[0]);
-                img.onload = function() {
-                    const width = img.naturalWidth;
-                    const height = img.naturalHeight;
-                    if (width !== height) {
-                        alert('Please upload an image with a 1:1 aspect ratio.');
-                        fileInput.value = ''; // Mengosongkan input file
-                        imgPreview.src = ''; // Menghapus tampilan preview
-                    }
-                };
-            });
         }
     </script>
 </body>
