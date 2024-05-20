@@ -59,8 +59,8 @@
                             @foreach ($usersWithStatus as $user)
                                 <div class="col">
                                     <div class="card gedf-card mt-3">
-                                        <div class="card-body" 
-                                            style="cursor: pointer;" title="Click to View Profile {{ $user->id }}">
+                                        <div class="card-body" style="cursor: pointer;"
+                                            title="Click to View Profile {{ $user->id }}">
                                             <div class="d-flex justify-content-start align-items-center">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="mr-2">
@@ -91,12 +91,12 @@
                                                 @if (Auth::check() && (Auth::user()->id === $datauser->id || $isAdmin))
                                                     <div class="me-auto">
                                                         <form action="/addgroupmember/{{ $user->id }}" method="post"
-                                                            class="d-inline" id="deleteForm">
+                                                            class="d-inline" id="deleteForm{{ $user->id }}">
                                                             @method('delete')
                                                             @csrf
                                                             <button class="btn btn-outline-danger"
-                                                                onclick="confirmDelete(event)" title="Delete Post"><i
-                                                                    class="bi bi-trash"></i></button>
+                                                                onclick="confirmDelete(event, {{ $user->id }})"
+                                                                title="Delete Post"><i class="bi bi-trash"></i></button>
                                                         </form>
                                                     </div>
                                                 @endif
@@ -167,20 +167,21 @@
     </div>
 
     <script>
-        function confirmDelete(event) {
-            event.preventDefault(); // Menghentikan pengiriman form secara langsung
+        function confirmDelete(event, userId) {
+            event.preventDefault();
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Delete this user permission?",
+                text: "You want to delete this member?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',
                 cancelButtonText: 'Cancel',
+                allowOutsideClick: false,
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('deleteForm').submit(); // Menyerahkan form jika pengguna mengonfirmasi
+                    document.getElementById('deleteForm' + userId).submit();
                 }
             });
         }
