@@ -40,9 +40,8 @@ class PostController extends Controller
             'department' => 'required|not_in:empty',
             'categories' => 'required|not_in:empty',
             'subcategories' => 'required|not_in:empty',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg|dimensions:ratio=16/9,4/3,3/4',
             'slug' => 'required|unique:posts',
-            'file' => 'file',
         ]);
 
         $validateData['slug'] = Str::slug($request->slug);
@@ -103,7 +102,7 @@ class PostController extends Controller
             'department' => 'required|not_in:empty',
             'categories' => 'required|not_in:empty',
             'subcategories' => 'required|not_in:empty',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|dimensions:ratio=16/9,4/3,3/4',
         ]);
 
         if ($request->slug != $post->slug) {

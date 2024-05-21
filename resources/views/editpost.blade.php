@@ -27,7 +27,7 @@
 
 <body>
     <div class="container">
-    <h1 class="mt-5 mb-4">Edit Post</h1>
+        <h1 class="mt-5 mb-4">Edit Post</h1>
         <hr>
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
@@ -766,8 +766,11 @@
                 <img src="{{ asset('storage/' . $post->thumbnail) }}" class="img-preview mb-3 col-sm-3 d-block">
                 <input class="form-control" type="file" id="thumbnail" name="thumbnail"
                     onchange="previewThumbnail()" accept="image/*" @error('thumbnail') is-invalid @enderror>
-                <small class="form-text text-muted">Allowed thumbnail format: jpg, jpeg,
-                    png</small>
+                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Allowed thumbnail format: jpg,
+                    jpeg,
+                    png</div>
+                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Picture must have one of the
+                    following ratios: 16:9, 3:4, 4:3</div>
                 @error('thumbnail')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -775,7 +778,7 @@
 
             <div class="mb-3 d-grid">
                 <button type="submit" class="btn btn-primary">Next (Edit Post File)</button>
-        </div>
+            </div>
         </form>
     </div>
 

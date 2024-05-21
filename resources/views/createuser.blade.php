@@ -59,6 +59,7 @@
                 <label for="email" class="form-label">Group Email*</label>
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                     id="group_email" placeholder="Insert Group Email" required value="{{ old('email') }}">
+                <div id="emailHelp" class="form-text" style="font-size:12px;">*allowed email domain: john.petra.ac.id, petra.ac.id, gmail.com, yahoo.com</div>
                 @error('email')
                     <div class="invalid-feedback">
                         {{ $message }}

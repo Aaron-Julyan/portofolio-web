@@ -26,12 +26,9 @@
                                 {{ $datauser->category ? $datauser->category : 'No Category' }}</div>
                             <p class="card-text">
                                 {{ $datauser->description ? $datauser->description : 'No Description' }}</p>
-                            <div>
-                                <a href="#" type="button" class="btn btn-outline-secondary">
-                                    <i class="bi bi-envelope-at"></i>
-                                    {{ $datauser->email }}
-                                </a>
-                            </div>
+                            <a href="mailto:{{ $datauser->email }}" class="btn btn-outline-secondary">
+                                <i class="bi bi-envelope"></i> {{ $datauser->email }}
+                            </a>
                         </div>
                     </div>
 

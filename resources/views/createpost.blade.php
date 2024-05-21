@@ -26,7 +26,7 @@
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none;
         }
-</style>
+    </style>
 </head>
 
 <body>
@@ -604,8 +604,11 @@
                 <img class="thumbnail-preview img-fluid mb-3 col-sm-3">
                 <input class="form-control" type="file" id="thumbnail" name="thumbnail"
                     onchange="previewThumbnail()" accept="image/*" @error('thumbnail') is-invalid @enderror>
-                <small class="form-text text-muted">Allowed thumbnail format: jpg, jpeg,
-                    png</small>
+                {{-- <small class="form-text text-muted">Allowed thumbnail format: jpg, jpeg,
+                    png</small> --}}
+                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Allowed thumbnail format: jpg, jpeg,
+                    png</div>
+                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Picture must have one of the following ratios: 16:9, 3:4, 4:3</div>
                 @error('thumbnail')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror

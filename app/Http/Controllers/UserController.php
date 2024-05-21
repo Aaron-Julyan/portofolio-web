@@ -192,15 +192,34 @@ class UserController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'email:dns',
+            'email' => [
+                'nullable',
+                'email:dns',
+                function ($attribute, $value, $fail) use ($user) {
+                    if (!empty($value)) {
+                        $allowedDomains = ['john.petra.ac.id', 'petra.ac.id', 'gmail.com', 'yahoo.com'];
+                        $emailDomain = substr(strrchr($value, "@"), 1);
+            
+                        if (!in_array($emailDomain, $allowedDomains)) {
+                            $fail('The :attribute must be an email address from an allowed domain.');
+                        }
+        
+                        if ($value != $user->email) {
+                            if (User::where('email', $value)->exists()) {
+                                $fail('The :attribute has already been taken.');
+                            }
+                        }
+                    }
+                },
+            ],
             'category' => 'max:255',
             'description' => 'max:255',
-            'file' => 'image|file|max:3072'
+            'file' => 'image|file|max:3072|dimensions:ratio=1/1'
         ]);
 
-        if ($request->email != $user->email) {
-            $validatedData['email'] .= '|unique:users';
-        }
+        // if ($request->email != $user->email) {
+        //     $validatedData['email'] .= '|unique:users';
+        // }
 
         if ($request->file('file')) {
             if ($user->file) {

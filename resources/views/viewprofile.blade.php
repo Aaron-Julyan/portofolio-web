@@ -29,12 +29,9 @@
                                     {{ $datauser->category ? $datauser->category : 'No Category' }}</div>
                                 <p class="card-text">
                                     {{ $datauser->description ? $datauser->description : 'No Description' }}</p>
-                                <div>
-                                    <a href="#" type="button" class="btn btn-outline-secondary">
-                                        <i class="bi bi-envelope-at"></i>
-                                        {{ $datauser->email }}
+                                    <a href="mailto:{{ $datauser->email }}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-envelope"></i> {{ $datauser->email }}
                                     </a>
-                                </div>
                             </div>
                         </div>
                         @if (Auth::check())
@@ -277,8 +274,8 @@
                                         <hr class="dropdown-divider">
                                 @endif
                                 </li>
-                                <li><a class="dropdown-item" href="/groupmember/{{ $datauser->id }}"> Check Member List <i
-                                            class="bi bi-people-fill"></i></a></li>
+                                <li><a class="dropdown-item" href="/groupmember/{{ $datauser->id }}"> Check Member List
+                                        <i class="bi bi-people-fill"></i></a></li>
                             </ul>
                         </div>
                     @endif

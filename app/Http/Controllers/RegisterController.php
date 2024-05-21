@@ -30,7 +30,7 @@ class RegisterController extends Controller
                 'email:dns',
                 'unique:users',
                 function ($attribute, $value, $fail) {
-                    $allowedDomains = ['john.petra.ac.id', 'petra.ac.id'];
+                    $allowedDomains = ['john.petra.ac.id', 'petra.ac.id', 'gmail.com', 'yahoo.com'];
                     $emailDomain = substr(strrchr($value, "@"), 1);
         
                     if (!in_array($emailDomain, $allowedDomains)) {
@@ -41,7 +41,7 @@ class RegisterController extends Controller
             'password' => 'required|min:4|max:255',
             'category' => 'required|max:255',
             'description' => 'max:255',
-            'file' => 'required|image|file|max:3072'
+            'file' => 'required|image|file|max:3072|dimensions:ratio=1/1'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
