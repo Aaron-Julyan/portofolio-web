@@ -51,8 +51,7 @@
                 @else
                     <li class="nav-item">
                         <a class="nav-link me-2" aria-current="page" href="/login">
-                            <i class="bi bi-box-arrow-in-left"></i>
-                            Log In
+                            <i class="bi bi-box-arrow-in-left"></i> Log In
                         </a>
                     </li>
                 @endauth

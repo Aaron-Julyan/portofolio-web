@@ -24,7 +24,20 @@ class RegisterController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'username' => 'required|min:4|max:255|unique:users',
-            'email' => 'required|email:dns|unique:users',
+            // 'email' => 'required|email:dns|unique:users',
+            'email' => [
+                'required',
+                'email:dns',
+                'unique:users',
+                function ($attribute, $value, $fail) {
+                    $allowedDomains = ['john.petra.ac.id', 'petra.ac.id'];
+                    $emailDomain = substr(strrchr($value, "@"), 1);
+        
+                    if (!in_array($emailDomain, $allowedDomains)) {
+                        $fail('The :attribute must be an email address from an allowed domain.');
+                    }
+                },
+            ],
             'password' => 'required|min:4|max:255',
             'category' => 'required|max:255',
             'description' => 'max:255',

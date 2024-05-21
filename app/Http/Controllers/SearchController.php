@@ -132,7 +132,13 @@ class SearchController extends Controller
         $pluckdatapostbycategories = $datapostbycategories->pluck('id')->toArray();
 
         // ambil post dari keyword
-        $datakeyword = Keyword::where('keyword', $searchvalue)->get();
+        // $datakeyword = Keyword::where('keyword', $searchvalue)->get();
+        $datakeyword = Keyword::orderBy('created_at', 'desc')
+            ->where(function (Builder $query) use ($searchvalue): void {
+                $query
+                    ->orWhere('keyword', 'ilike', "%{$searchvalue}%");
+            })
+            ->get();
         $postidbykeyword = $datakeyword->pluck('post_id');
         $datapostbykeyword = Post::whereIn('id', $postidbykeyword)
             ->whereNotIn('id', $pluckdatapostbycategories)

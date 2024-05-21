@@ -56,7 +56,7 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="body" class="form-label">Deskripsi*</label>
+                <label for="description" class="form-label">Description*</label>
                 @error('body')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
