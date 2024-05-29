@@ -51,7 +51,7 @@
             @endif
 
             <input type="hidden" name="postid" value="{{ $postid }}">
-            <p>{{ $postid }} (Nanti hapus)</p>
+            {{-- <p>{{ $postid }} (Nanti hapus)</p> --}}
 
             <div class="mb-3">
                 <div class="row mb-3">

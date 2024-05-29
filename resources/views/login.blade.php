@@ -41,8 +41,7 @@
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" name="username" class="form-control" @error('username') is-invalid @enderror id="username" aria-describedby="usernameHelp" autofocus required value="{{ old('username') }}">
-                    <div id="usernameHelp" class="form-text" style="font-size:12px;">*user harus terdaftarkan oleh dosen /
-                        mahasiswa</div>
+                    <div id="usernameHelp" class="form-text" style="font-size:12px;">*user must be registered by lecturer or student</div>
                     @error('username') 
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -59,10 +58,10 @@
 
         <hr class="divider my-3">
         <div class="text-center">
-            <p>atau</p>
+            <p>or</p>
         </div>
     <a href="{{ route('google.login') }}" class="btn btn-danger btn-block w-100">
-            <i class="fab fa-google-plus me-2"></i>Log In dengan Google Petra
+            <i class="fab fa-google-plus me-2"></i>Log In with Google Petra
         </a>
     </div>
 </body>

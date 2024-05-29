@@ -16,10 +16,7 @@ class DashboardProfileController extends Controller
     {
         $sendvalue = "No Value";
 
-        //ambil semua postingan
-        $datapost = Post::orderBy('created_at', 'desc')->get();
-        //ambil semua user selain dirinya sendiri
-        $currentUser = Auth::user();
+        //ambil semua user
         $datauser = User::all();
 
         //untuk button tag
@@ -30,7 +27,6 @@ class DashboardProfileController extends Controller
             ->take(5)
             ->pluck('category');
 
-        // dd($datauser);
         return view('dashboardprofile', compact('datauser', 'tagcategories', 'sendvalue'));
     }
 
@@ -46,27 +42,12 @@ class DashboardProfileController extends Controller
 
     public function show($value)
     {
-        // dd($value);
-
-        //ini sama kayak dashboard
+        //sama kayak dashboard
         //ambil semua postingan berdasarkan tag yang di select
         $sendvalue = $value;
 
-        // $datapost = Post::orderBy('created_at', 'desc')
-        //     ->where('category', $value)
-        //     ->get();
-
-        //ambil semua user selain dirinya sendiri
         $currentUser = Auth::user();
         $datauser = User::where('category', $value)->get();
-
-        // $postfile = [];
-        // $postcontributor = [];
-        // $postkeyword = [];
-        // foreach ($datapost as $post) {
-        //     $postcontributor[$post->id] = Contributor::where('post_id', $post->id)->get();
-        //     $postkeyword[$post->id] = Keyword::where('post_id', $post->id)->get();
-        // }
 
         //untuk button tag
         $tagcategories = User::orderBy('category')
@@ -76,8 +57,6 @@ class DashboardProfileController extends Controller
             ->take(5)
             ->pluck('category');
 
-        // dd($tagcategories);
-        // return view('dashboardprofile', compact('datauser', 'datapost', 'postcontributor', 'postkeyword', 'tagcategories', 'sendvalue'));
         return view('dashboardprofile', compact('datauser', 'tagcategories', 'sendvalue'));
     }
 

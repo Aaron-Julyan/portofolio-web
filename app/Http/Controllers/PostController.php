@@ -71,8 +71,6 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $currentuser = Auth::id();
-        // $userpost = $post->user_id;
-        // dd($currentUser, $userpost);
 
         $postfile = File::where('post_id', $post->id)->get();
         $albums = $postfile->where('filetype', 'Album');
@@ -108,12 +106,10 @@ class PostController extends Controller
         if ($request->slug != $post->slug) {
             $validatedData['slug'] = 'required|unique:posts';
         }
-        // $validateData['slug'] = Str::slug($request->slug);
+        
         if ($request->description != $post->description) {
             $validateData['excerpt'] = Str::limit(strip_tags($request->description), 30);
         }
-
-        // dd($request->description);
 
         if (session()->has('isAdmin')) {
             $permissionId = session('isAdmin');
@@ -141,16 +137,12 @@ class PostController extends Controller
         session()->put('edited', 'Post Updated!');
         session(['postid' => $post->id]);
         return redirect('/createpostfile')->with('success', 'Post Edited!');
-
-        // session(['postid' => $id]);
-        // return view('/createpostfile')->with('success', 'Post Updated!');
     }
 
     public function destroy($id)
     {
         $post = Post::find($id);
         $files = File::where('post_id', $post->id)->get();
-        // dd($files);
 
         foreach ($files as $file) {
             if ($file->filetype == 'Image') {

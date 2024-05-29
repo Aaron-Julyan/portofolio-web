@@ -48,7 +48,7 @@ Route::get('/finishpost', [UserController::class, 'finishpost'])->middleware('au
 Route::get('/viewprofile/{viewprofileid}', [UserController::class, 'show']); //view profile
 
 Route::resource('/addgroupmember', GroupController::class)->middleware('auth');
-Route::resource('/groupmember', GroupMemberController::class)->middleware('auth');
+Route::resource('/groupmember', GroupMemberController::class);
 Route::get('/groupmember/search', [GroupMemberController::class, 'show']); //ini ga pake
 
 Route::get('/objects', function () {
@@ -65,10 +65,6 @@ Route::get('/objects', function () {
 
 //for python testing (can delete later)
 // Route::resource('/testpython', PythonController::class);
-
-//belum bisa
-Route::get('/formobject', [ObjectController::class, 'index']);
-Route::post('/formobject', [ObjectController::class, 'store'])->name('model.store');
 
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/login', [LoginController::class, 'index'])->name('login');

@@ -51,7 +51,6 @@ class ContributorController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validateData['post_id'] = $request->postid;
         $validateData['user_id'] = $request->selectedId;
 

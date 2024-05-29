@@ -21,7 +21,6 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'description' => 'required|max:255',
         ]);
@@ -36,7 +35,7 @@ class CommentController extends Controller
             'description' => $request->description,
         ]);
 
-        return back()->with('success', 'Komentar telah ditambahkan.');
+        return back()->with('success', 'New Comment Succesfully Added!.');
     }
 
     public function show($id)

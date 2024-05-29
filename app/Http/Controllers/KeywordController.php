@@ -35,7 +35,6 @@ class KeywordController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validateData['post_id'] = $request->postid;
         $validateData['keyword'] = $request->keyword;
 

@@ -25,10 +25,7 @@ class UserController extends Controller
             session()->forget('isAdmin');
         }
 
-        // dd(session('edited'), session('isAdmin'));
-
         $datauser = Auth::user();
-        $members = User::paginate(5); //data member dari group
         $datapost = Post::where('user_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -36,7 +33,6 @@ class UserController extends Controller
         $postcontributor = [];
         $postkeyword = [];
         foreach ($datapost as $post) {
-            // $postfile[$post->id] = File::where('post_id', $post->id)->get(); 
             $postcontributor[$post->id] = Contributor::select('contributors.*', 'users.file', 'users.name', 'users.email', 'users.status')
                 ->join('users', 'users.id', '=', 'contributors.user_id')
                 ->where('contributors.post_id', $post->id)
@@ -45,7 +41,7 @@ class UserController extends Controller
         }
 
         session()->put('groupId', $datauser->id); //untuk check member list
-        return view('profile', compact('datauser', 'members', 'datapost', 'postcontributor', 'postkeyword'));
+        return view('profile', compact('datauser', 'datapost', 'postcontributor', 'postkeyword'));
     }
 
     public function finishpost()
@@ -181,14 +177,12 @@ class UserController extends Controller
 
     public function update(UserStore $request, $id)
     {
-        // $user = Auth::user();
         if (session()->has('isAdmin')) {
             $permissionId = session('isAdmin');
             $user = User::find($permissionId);
         } else {
             $user = Auth::user();
         }
-        // dd($request->all());
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -216,10 +210,6 @@ class UserController extends Controller
             'description' => 'max:255',
             'file' => 'image|file|max:3072|dimensions:ratio=1/1'
         ]);
-
-        // if ($request->email != $user->email) {
-        //     $validatedData['email'] .= '|unique:users';
-        // }
 
         if ($request->file('file')) {
             if ($user->file) {

@@ -77,7 +77,6 @@ class GroupController extends Controller
         } 
         session()->put('groupId', $permissionId);
 
-        // session(['postid' => $request->postid]);
         if ($request->selectedRole == 'Member') {
             return redirect('/groupmember')->with('success', 'New Member Added!');
         } else if ($request->selectedRole == 'Admin') {

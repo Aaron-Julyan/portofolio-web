@@ -57,7 +57,7 @@
 
             {{-- ini dikirim dari function show --}}
             <input type="hidden" name="postid" value="{{ $postid }}">
-            <p>{{ $postid }} (Nanti hapus)</p>
+            {{-- <p>{{ $postid }} (Nanti hapus)</p> --}}
 
             <div class="mb-3">
                 <label for="filename" class="form-label">File Title*</label>

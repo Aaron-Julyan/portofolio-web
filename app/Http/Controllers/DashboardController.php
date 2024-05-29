@@ -49,13 +49,6 @@ class DashboardController extends Controller
             ->take(5)
             ->pluck('subcategories');
 
-        // recent keyword
-        // $tagkeywords = Keyword::orderBy('keyword')
-        //     ->distinct('keyword')
-        //     ->orderBy('created_at', 'desc')
-        //     ->take(5)
-        //     ->pluck('keyword');
-
         // ambil 5 random keywords
         $tagkeywords = Keyword::select('keyword')
             ->distinct()
@@ -64,7 +57,6 @@ class DashboardController extends Controller
             ->shuffle()
             ->take(5);
 
-        // dd($tagkeywords);
         return view('dashboard', compact('datapost', 'postcontributor', 'postkeyword', 'tagdepartment', 'tagcategories', 'tagsubcategories', 'tagkeywords', 'sendvalue'));
     }
 

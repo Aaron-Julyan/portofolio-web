@@ -69,11 +69,6 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            //kalo dalam request ada google maka login sebagai user (google)
-            // if(Socialite::driver('google')->has('clientId')){
-            //     return redirect()->route('google.login');
-            // }
-
             return redirect()->intended('/dashboard');
         }
 

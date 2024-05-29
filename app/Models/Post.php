@@ -22,11 +22,6 @@ class Post extends Model
     //     );
     // }
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -65,9 +60,4 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
-
-
-    // public function checkSlug(Request $request){
-
-    // }
 }
