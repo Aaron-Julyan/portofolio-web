@@ -54,7 +54,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    // 'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://180.248.22.246.nip.io:8000'),
 
     'asset_url' => env('ASSET_URL'),
 
