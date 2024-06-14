@@ -40,8 +40,13 @@
             </div>
             <div class="mb-3">
                 <label for="slug" class="form-label">Slug*</label>
+                <div id="slugHelp" class="form-text" style="font-size:12px;">Slug is the <span style="color: red;">last
+                        path of the url</span> used to access and display your post details.</div>
+                <div id="slugHelp" class="form-text" style="font-size:12px;">ex:
+                    https://portofolioweb.site/viewpost/<code>your-slug</code></div>
+                <div id="slugHelp" class="form-text mb-3" style="font-size:12px; color: #FFA500;">*Can't edit slug after post created</div>
                 <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                    id="slug" placeholder="Insert Slug" required value="{{ old('slug', $post->slug) }}">
+                    id="slug" placeholder="Insert Slug" required value="{{ old('slug', $post->slug) }}" readonly>
                 @error('slug')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -49,8 +54,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="body" class="form-label">Description*</label>
-                @error('body')
+                <label for="description" class="form-label">Description*</label>
+                @error('description')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
                 <input id="description" type="hidden" name="description"

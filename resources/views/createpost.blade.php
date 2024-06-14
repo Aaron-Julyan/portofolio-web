@@ -47,8 +47,15 @@
             </div>
             <div class="mb-3">
                 <label for="slug" class="form-label">Slug*</label>
+                <div id="slugHelp" class="form-text" style="font-size:12px;">Slug is the <span style="color: red;">last
+                        path of the url</span> used to access and display your post details.</div>
+                <div id="slugHelp" class="form-text" style="font-size:12px;">ex:
+                    https://portofolioweb.site/viewpost/<code>your-slug</code></div>
+                <div id="slugHelp" class="form-text" style="font-size:12px;">Avoid using spaces or can use
+                    hyphen '-' to separate words.</div>
+                <div id="slugHelp" class="form-text mb-3" style="font-size:12px; color: #FFA500;">*Can't edit slug after post created</div>
                 <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                    id="slug" placeholder="Masukkan slug" required value="{{ old('slug') }}">
+                    id="slug" placeholder="Input slug" required value="{{ old('slug') }}">
                 @error('slug')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -57,7 +64,7 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description*</label>
-                @error('body')
+                @error('description')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
                 <input id="description" type="hidden" name="description" value={{ old('description') }}>
@@ -606,9 +613,10 @@
                     onchange="previewThumbnail()" accept="image/*" @error('thumbnail') is-invalid @enderror>
                 {{-- <small class="form-text text-muted">Allowed thumbnail format: jpg, jpeg,
                     png</small> --}}
-                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Allowed thumbnail format: jpg, jpeg,
+                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Allowed thumbnail format: jpg,
+                    jpeg,
                     png</div>
-                <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Picture must have one of the following ratios: 16:9, 3:4, 4:3</div>
+                {{-- <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Picture must have one of the following ratios: 16:9, 3:4, 4:3</div> --}}
                 @error('thumbnail')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror

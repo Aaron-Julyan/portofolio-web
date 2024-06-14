@@ -62,7 +62,7 @@
             <div class="mb-3">
                 <label for="filename" class="form-label">File Title*</label>
                 <input type="text" name="filename" class="form-control @error('filename') is-invalid @enderror"
-                    id="filename" placeholder="Masukkan filename" required value="{{ old('filename') }}">
+                    id="filename" placeholder="Input filename" required value="{{ old('filename') }}">
                 @error('filename')
                     <div class="invalid-feedback">
                         {{ $message }}

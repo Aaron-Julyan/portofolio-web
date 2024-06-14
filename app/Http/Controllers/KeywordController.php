@@ -38,11 +38,6 @@ class KeywordController extends Controller
         $validateData['post_id'] = $request->postid;
         $validateData['keyword'] = $request->keyword;
 
-        // if ($request->selectedId == '0') {
-        //     session(['postid' => $request->postid]);
-        //     return redirect('/createpostcontributor')->with('error', 'No User Selected!');
-        // }
-
         Keyword::create($validateData);
 
         if (session()->has('edited')) {

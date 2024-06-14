@@ -30,9 +30,15 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('dashboard');
+// Route::get('storage/link', function(){
+//     $targetFolder = base_path().'storage/app/public';
+//     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+//     symlink($targetFolder, $linkFolder);
 // });
+
+Route::get('/', function () {
+    return view('login');
+});
 Route::resource('/dashboard', DashboardController::class);
 Route::get('/dashboard/keyword/{keywords}', [DashboardController::class, 'showkeywordresult']);
 Route::resource('/dashboardprofile', DashboardProfileController::class);

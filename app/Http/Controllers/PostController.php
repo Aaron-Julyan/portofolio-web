@@ -40,7 +40,8 @@ class PostController extends Controller
             'department' => 'required|not_in:empty',
             'categories' => 'required|not_in:empty',
             'subcategories' => 'required|not_in:empty',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg|dimensions:ratio=16/9,4/3,3/4',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
+            // 'thumbnail' => 'required|image|mimes:jpeg,png,jpg|dimensions:ratio=16/9,4/3,3/4',
             'slug' => 'required|unique:posts',
         ]);
 
@@ -100,13 +101,13 @@ class PostController extends Controller
             'department' => 'required|not_in:empty',
             'categories' => 'required|not_in:empty',
             'subcategories' => 'required|not_in:empty',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg|dimensions:ratio=16/9,4/3,3/4',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg',
         ]);
 
         if ($request->slug != $post->slug) {
             $validatedData['slug'] = 'required|unique:posts';
         }
-        
+
         if ($request->description != $post->description) {
             $validateData['excerpt'] = Str::limit(strip_tags($request->description), 30);
         }
@@ -158,9 +159,17 @@ class PostController extends Controller
             }
         }
 
+        // /viewprofile/{{ $user->id }}
         Storage::delete($post->thumbnail);
         Post::destroy($id);
-        return redirect('/profile')->with('success', 'Post Deleted!');
+        // return redirect('/profile')->with('success', 'Post Deleted!');
+
+        if (session()->has('isAdmin')) {
+            $permissionId = session('isAdmin');
+            return redirect('/viewprofile/' . $permissionId)->with('success', 'Post Deleted!');
+        } else {
+            return redirect('/profile')->with('success', 'Post Deleted!');
+        }
     }
 
     // public function checkSlug(Request $request){

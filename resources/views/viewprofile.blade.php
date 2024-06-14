@@ -29,9 +29,9 @@
                                     {{ $datauser->category ? $datauser->category : 'No Category' }}</div>
                                 <p class="card-text">
                                     {{ $datauser->description ? $datauser->description : 'No Description' }}</p>
-                                    <a href="mailto:{{ $datauser->email }}" class="btn btn-outline-secondary">
-                                        <i class="bi bi-envelope"></i> {{ $datauser->email }}
-                                    </a>
+                                <a href="mailto:{{ $datauser->email }}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-envelope"></i> {{ $datauser->email }}
+                                </a>
                             </div>
                         </div>
                         @if (Auth::check())
@@ -126,7 +126,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    <a class="card-body" href="/viewpost/{{ $post->slug }}"
+                                        style="text-decoration: none; color: inherit;"
+                                        title="Click to View Post {{ $post->slug }}">
                                         <div>
                                             <span class="badge text-bg-secondary ">{{ $post->department }}</span>
                                             <span class="badge text-bg-secondary ">{{ $post->categories }}</span>
@@ -145,7 +147,7 @@
                                         <div class="row">
                                             <img src="{{ asset('storage/' . $post->thumbnail) }}" class="img-fluid">
                                         </div>
-                                    </div>
+                                    </a>
                                     <div class="card-footer">
                                         <a href="/viewpost/{{ $post->slug }}" class="card-link"><i
                                                 class="fa fa-comment"></i>
@@ -155,8 +157,8 @@
                             </div>
 
                             {{-- modal tiap post, kalo mau kasar (soalnya ke load semua) --}}
-                            <div class="modal fade" id="contributorsModal{{ $post->id }}" tabindex="-1" role="dialog"
-                                aria-labelledby="contributorsModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="contributorsModal{{ $post->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="contributorsModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -272,24 +274,45 @@
                                             {{ $datauser->name }} <i class="bi bi-plus-circle-fill"></i></a></li>
                                     <li>
                                         <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="/groupmember/{{ $datauser->id }}"> Check Member
+                                            List
+                                            <i class="bi bi-people-fill"></i></a></li>
                                 @endif
-                                </li>
-                                <li><a class="dropdown-item" href="/groupmember/{{ $datauser->id }}"> Check Member List
-                                        <i class="bi bi-people-fill"></i></a></li>
                             </ul>
                         </div>
                     @endif
                 @else
                     {{-- ga login --}}
-                    <div class="btn-group dropup d-flex justify-content-end position-fixed bottom-0 start-0 m-3">
-                        <a href="/groupmember/{{ $datauser->id }}" class="btn btn-primary">
-                            Check Member List <i class="bi bi-people-fill"></i>
-                        </a>
-                    </div>
+                    @if ($datauser->status == 'group')
+                        <div class="btn-group dropup d-flex justify-content-end position-fixed bottom-0 start-0 m-3">
+                            <a href="/groupmember/{{ $datauser->id }}" class="btn btn-primary">
+                                Check Member List <i class="bi bi-people-fill"></i>
+                            </a>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>
     </div>
+
+    <style>
+        /* mengatasi edit profile yang keluar dari kotak */
+        @media (max-width: 573px) {
+            .card .d-flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ms-4 {
+                margin-left: 0 !important;
+            }
+
+            .me-3 {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
 
     <script>
         function confirmDelete(event) {

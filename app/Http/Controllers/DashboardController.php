@@ -73,9 +73,7 @@ class DashboardController extends Controller
     // ini untuk filter by: department, categories, subcategories
     public function show($value)
     {
-        // dd($value);
-
-        //ini sama kayak dashboard
+        //sama kayak dashboard
         //ambil semua postingan berdasarkan tag yang di select
         $sendvalue = $value;
 
@@ -115,13 +113,6 @@ class DashboardController extends Controller
             ->take(5)
             ->pluck('subcategories');
 
-        // recent keyword
-        // $tagkeywords = Keyword::orderBy('keyword')
-        //     ->distinct('keyword')
-        //     ->orderBy('created_at', 'desc')
-        //     ->take(5)
-        //     ->pluck('keyword');
-
         // ambil 5 random keywords
         $tagkeywords = Keyword::select('keyword')
             ->distinct()
@@ -129,8 +120,6 @@ class DashboardController extends Controller
             ->pluck('keyword')
             ->shuffle()
             ->take(5);
-
-        // dd($tagkeywords);
 
         return view('dashboard', compact('datapost', 'postcontributor', 'postkeyword', 'tagdepartment', 'tagcategories', 'tagsubcategories', 'tagkeywords', 'sendvalue'));
     }

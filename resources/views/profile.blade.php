@@ -30,8 +30,8 @@
                                 <p class="card-text">
                                     {{ $datauser->description ? $datauser->description : 'No Description' }}</p>
                                 <a href="mailto:{{ $datauser->email }}" class="btn btn-outline-secondary">
-                                        <i class="bi bi-envelope"></i> {{ $datauser->email }}
-                                    </a>
+                                    <i class="bi bi-envelope"></i> {{ $datauser->email }}
+                                </a>
                             </div>
                         </div>
                         <div class="ms-4">
@@ -342,6 +342,22 @@
             height: auto;
             object-fit: cover;
             /* Memastikan gambar mengisi container */
+        }
+
+        /* mengatasi edit profile yang keluar dari kotak */
+        @media (max-width: 573px) {
+            .card .d-flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ms-4 {
+                margin-left: 0 !important;
+            }
+
+            .me-3 {
+                margin-bottom: 1rem;
+            }
         }
     </style>
     <script>

@@ -62,7 +62,7 @@
                             <label for="keyword" class="form-label">Keyword*</label>
                             <input type="text" name="keyword"
                                 class="form-control @error('keyword') is-invalid @enderror" id="keyword"
-                                placeholder="Masukkan keyword" required value="{{ old('keyword') }}">
+                                placeholder="Input keyword" required value="{{ old('keyword') }}">
                             <small class="form-text text-muted">Input one keyword at a time</small>
                         @endif
                     </div>

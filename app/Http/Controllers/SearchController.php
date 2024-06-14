@@ -174,6 +174,7 @@ class SearchController extends Controller
     //search function
     public function show(Request $request)
     {
+
         $searchvalue = $request->query('search', '');
 
         // modifikasi search value jika lebih dari satu kata
@@ -185,30 +186,52 @@ class SearchController extends Controller
         }
 
         // jika ingin menggunakan dua bahasa
-        $datauser = User::whereRaw("to_tsvector('english', name || ' ' || category || ' ' || email)
-        @@ to_tsquery('english', ?)
-        OR
-        to_tsvector('indonesian', name || ' ' || category || ' ' || email)
-        @@ to_tsquery('indonesian', ?)", [$modifiedSearchValue, $modifiedSearchValue])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // $datauser = User::whereRaw("to_tsvector('english', name || ' ' || category || ' ' || email)
+        // @@ to_tsquery('english', ?)
+        // OR
+        // to_tsvector('indonesian', name || ' ' || category || ' ' || email)
+        // @@ to_tsquery('indonesian', ?)", [$modifiedSearchValue, $modifiedSearchValue])
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
+        $datauser = User::orderBy('created_at', 'desc')
+            ->where(function (Builder $query) use ($searchvalue): void {
+                $query
+                    ->orwhere('name', 'like', "%{$searchvalue}%")
+                    ->orwhere('category', 'like', "%{$searchvalue}%")
+                    ->orWhere('email', 'like', "%{$searchvalue}%");
+            })->get();
 
         // datapostbycategories : bingung namain variabel nya apa
+        // $datapostbycategories = Post::with('user')
+        //     ->whereRaw("to_tsvector('english', description || ' ' || department || ' ' || categories || ' ' || subcategories)
+        // @@ to_tsquery('english', ?)
+        // OR
+        // to_tsvector('indonesian', description || ' ' || department || ' ' || categories || ' ' || subcategories)
+        // @@ to_tsquery('indonesian', ?)", [$modifiedSearchValue, $modifiedSearchValue])
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
         $datapostbycategories = Post::with('user')
-            ->whereRaw("to_tsvector('english', description || ' ' || department || ' ' || categories || ' ' || subcategories)
-        @@ to_tsquery('english', ?)
-        OR
-        to_tsvector('indonesian', description || ' ' || department || ' ' || categories || ' ' || subcategories)
-        @@ to_tsquery('indonesian', ?)", [$modifiedSearchValue, $modifiedSearchValue])
             ->orderBy('created_at', 'desc')
+            ->where(function (Builder $query) use ($searchvalue): void {
+                $query
+                    ->orWhere('description', 'like', "%{$searchvalue}%")
+                    ->orWhere('department', 'like', "%{$searchvalue}%")
+                    ->orWhere('categories', 'like', "%{$searchvalue}%")
+                    ->orWhere('subcategories', 'like', "%{$searchvalue}%");
+            })
             ->get();
+
         $pluckdatapostbycategories = $datapostbycategories->pluck('id')->toArray();
+
+        // dd($pluckdatapostbycategories);
 
         // ambil post dari keyword
         $datakeyword = Keyword::orderBy('created_at', 'desc')
             ->where(function (Builder $query) use ($searchvalue): void {
                 $query
-                    ->orWhere('keyword', 'ilike', "%{$searchvalue}%");
+                    ->orWhere('keyword', 'like', "%{$searchvalue}%");
             })
             ->get();
         $postidbykeyword = $datakeyword->pluck('post_id');
