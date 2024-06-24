@@ -36,9 +36,11 @@ use App\Http\Controllers\RegisterController;
 //     symlink($targetFolder, $linkFolder);
 // });
 
+// Route::get('/', [DashboardController::class, 'index']);
 Route::get('/', function () {
-    return view('login');
+    return view('dashboard');
 });
+
 Route::resource('/dashboard', DashboardController::class);
 Route::get('/dashboard/keyword/{keywords}', [DashboardController::class, 'showkeywordresult']);
 Route::resource('/dashboardprofile', DashboardProfileController::class);

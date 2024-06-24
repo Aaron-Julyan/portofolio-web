@@ -767,8 +767,12 @@
 
             <div class="mb-3">
                 <label class="form-label">Post Thumbnail*</label>
-                <img class="img-preview img-fluid mb-3 col-sm-3">
-                <img src="{{ asset('storage/' . $post->thumbnail) }}" class="img-preview mb-3 col-sm-3 d-block">
+                {{-- <img class="img-preview img-fluid mb-3 col-sm-3"> --}}
+                <div class="img-container">
+                    <img src="{{ asset('storage/' . $post->thumbnail) }}"
+                        class="img-preview mb-3 col-sm-3 d-block">
+                </div>
+                {{-- <img src="{{ asset('storage/' . $post->thumbnail) }}" class="img-preview mb-3 col-sm-3 d-block"> --}}
                 <input class="form-control" type="file" id="thumbnail" name="thumbnail"
                     onchange="previewThumbnail()" accept="image/*" @error('thumbnail') is-invalid @enderror>
                 <div id="thumbnailHelp" class="form-text" style="font-size:12px;">Allowed thumbnail format: jpg,
@@ -793,13 +797,21 @@
         })
 
         function previewThumbnail() {
+            // const image = document.querySelector('#thumbnail');
+            // const imgPreview = document.querySelector('.thumbnail-preview');
+
             const image = document.querySelector('#thumbnail');
-            const imgPreview = document.querySelector('.thumbnail-preview');
+            const imgContainer = document.querySelector('.img-container');
+            let imgPreview = document.querySelector('.img-preview');
 
             imgPreview.style.display = 'block';
 
             const fileURL = URL.createObjectURL(image.files[0]);
             imgPreview.src = fileURL;
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
         }
     </script>
 </body>

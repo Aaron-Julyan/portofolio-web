@@ -278,6 +278,10 @@
                                     <li><a class="dropdown-item" href="/groupmember/{{ $datauser->id }}"> Check Member
                                             List
                                             <i class="bi bi-people-fill"></i></a></li>
+                                @else
+                                    {{-- berarti antara member atau tidak punya otoritas --}}
+                                    <li><a class="dropdown-item" href="/groupmember/{{ $datauser->id }}"> Check Member
+                                            List <i class="bi bi-people-fill"></i></a></li>
                                 @endif
                             </ul>
                         </div>

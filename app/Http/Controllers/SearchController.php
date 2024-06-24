@@ -194,13 +194,30 @@ class SearchController extends Controller
         //     ->orderBy('created_at', 'desc')
         //     ->get();
 
+        // $datauser = User::orderBy('created_at', 'desc')
+        //     ->where(function (Builder $query) use ($searchvalue): void {
+        //         $query
+        //             ->orwhere('name', 'like', "%{$searchvalue}%")
+        //             ->orwhere('category', 'like', "%{$searchvalue}%")
+        //             ->orWhere('email', 'like', "%{$searchvalue}%");
+        //     })->get();
+
+        // ambil semua post jika search user
+        // $userIds = $datauser->pluck('id');
+        // $posts = Post::whereIn('user_id', $userIds)->get();
+
         $datauser = User::orderBy('created_at', 'desc')
             ->where(function (Builder $query) use ($searchvalue): void {
-                $query
-                    ->orwhere('name', 'like', "%{$searchvalue}%")
-                    ->orwhere('category', 'like', "%{$searchvalue}%")
-                    ->orWhere('email', 'like', "%{$searchvalue}%");
-            })->get();
+                $query->whereRaw(
+                    'MATCH(name, category, email) AGAINST(? IN NATURAL LANGUAGE MODE)',
+                    [$searchvalue]
+                );
+            })
+            ->get();
+
+        // ambil semua post jika search user
+        // $userIds = $datauser->pluck('id');
+        // $posts = Post::whereIn('user_id', $userIds)->get();
 
         // datapostbycategories : bingung namain variabel nya apa
         // $datapostbycategories = Post::with('user')
@@ -212,14 +229,24 @@ class SearchController extends Controller
         //     ->orderBy('created_at', 'desc')
         //     ->get();
 
+        // $datapostbycategories = Post::with('user')
+        //     ->orderBy('created_at', 'desc')
+        //     ->where(function (Builder $query) use ($searchvalue): void {
+        //         $query
+        //             ->orWhere('description', 'like', "%{$searchvalue}%")
+        //             ->orWhere('department', 'like', "%{$searchvalue}%")
+        //             ->orWhere('categories', 'like', "%{$searchvalue}%")
+        //             ->orWhere('subcategories', 'like', "%{$searchvalue}%");
+        //     })
+        //     ->get();
+
         $datapostbycategories = Post::with('user')
             ->orderBy('created_at', 'desc')
             ->where(function (Builder $query) use ($searchvalue): void {
-                $query
-                    ->orWhere('description', 'like', "%{$searchvalue}%")
-                    ->orWhere('department', 'like', "%{$searchvalue}%")
-                    ->orWhere('categories', 'like', "%{$searchvalue}%")
-                    ->orWhere('subcategories', 'like', "%{$searchvalue}%");
+                $query->whereRaw(
+                    'MATCH(description, department, categories, subcategories) AGAINST(? IN NATURAL LANGUAGE MODE)',
+                    [$searchvalue]
+                );
             })
             ->get();
 
@@ -240,6 +267,10 @@ class SearchController extends Controller
             ->get();
 
         $datapost = $datapostbycategories->concat($datapostbykeyword);
+
+        // ambil semua post jika search user > ambil postingannya
+        // $datapost = $datapostbycategories->concat($datapostbykeyword)->concat($posts);
+
         // comment penjelasan search by keyword:
         // jadi kan bisa aja keyword yang diisi sama dengan department, categories, dan subcategories
         // jadi diambil dulu post yang value nya ada di department, categories, dan subcategories
